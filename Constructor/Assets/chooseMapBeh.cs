@@ -8,15 +8,40 @@ public class chooseMapBeh : MonoBehaviour
     public Button button;
     bool blink = false;
     Color color = Color.white;
+    public GameObject firstMap;
+    public GameObject secondMap;
+    public GameObject thirdMap;
     // Start is called before the first frame update
     public void onClick()
     {
         State.map = button.name;
+        switch (button.name)
+        {
+            case ("firstMap"):
+                firstMap.SetActive(true);
+                secondMap.SetActive(false);
+                thirdMap.SetActive(false);
+                break;
+            case ("secondMap"):
+                firstMap.SetActive(false);
+                secondMap.SetActive(true);
+                thirdMap.SetActive(false);
+                break;
+            case ("thirdMap"):
+                firstMap.SetActive(false);
+                secondMap.SetActive(false);
+                thirdMap.SetActive(true);
+                break;
+            default:
+                break;
+        }
     }
 
     void Start()
     {
-        
+        firstMap.SetActive(false);
+        secondMap.SetActive(false);
+        thirdMap.SetActive(false);
     }
 
     // Update is called once per frame
