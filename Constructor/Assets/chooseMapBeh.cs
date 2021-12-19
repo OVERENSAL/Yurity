@@ -51,16 +51,16 @@ public class chooseMapBeh : MonoBehaviour
         {
             if (!blink)
             {
-                color = color * 0.98f;
+                color = color * 0.99f;
                 button.GetComponent<Image>().color = color;
-                if (button.GetComponent<Image>().color.a <= 0.7)
+                if (button.GetComponent<Image>().color.a <= 0.5)
                 {
                     blink = true;
                 }
             }
             else
             {
-                color = color / 0.98f;
+                color = color / 0.99f;
                 button.GetComponent<Image>().color = color;
                 if (button.GetComponent<Image>().color.a >= 1)
                 {
