@@ -16,6 +16,7 @@ public class GameProcess : MonoBehaviour
     private bool isGo = false;
     private bool stepComplete = false;
     private int steps = 0;
+    private float yCoordDiff = 0;
 
 
     public void GetRandom()
@@ -25,7 +26,7 @@ public class GameProcess : MonoBehaviour
         if (stepsCount < cells.childCount)
         {
             Debug.Log(steps);
-            destination = new Vector3(mapCells[stepsCount - steps].transform.position.x, playerModel.transform.position.y, mapCells[stepsCount - steps].transform.position.z);
+            destination = new Vector3(mapCells[stepsCount - steps].transform.position.x, mapCells[cells.childCount - 1].transform.position.y + yCoordDiff, mapCells[stepsCount - steps].transform.position.z);
             isGo = true;
             stepComplete = false;
 
@@ -34,7 +35,7 @@ public class GameProcess : MonoBehaviour
         else
         {
             stepComplete = true;
-            destination = new Vector3(mapCells[cells.childCount - 1].transform.position.x, playerModel.transform.position.y, mapCells[cells.childCount - 1].transform.position.z);
+            destination = new Vector3(mapCells[cells.childCount - 1].transform.position.x, mapCells[cells.childCount - 1].transform.position.y + yCoordDiff, mapCells[cells.childCount - 1].transform.position.z);
             Debug.Log("You win!");
         }
     }
@@ -45,7 +46,7 @@ public class GameProcess : MonoBehaviour
         {
             Debug.Log("Curren cell: " + (stepsCount - steps));
             steps--;
-            destination = new Vector3(mapCells[stepsCount - steps].transform.position.x, playerModel.transform.position.y, mapCells[stepsCount - steps].transform.position.z);
+            destination = new Vector3(mapCells[stepsCount - steps].transform.position.x, mapCells[cells.childCount - 1].transform.position.y + yCoordDiff, mapCells[stepsCount - steps].transform.position.z);
             Debug.Log("Curren cell coords: " + destination);
         }
         else
@@ -63,7 +64,10 @@ public class GameProcess : MonoBehaviour
         {
             mapCells.Add(cell.gameObject);
         }
-        Debug.Log(playerModel.transform.position);
+
+        yCoordDiff = playerModel.transform.position.y - mapCells[0].transform.position.y;
+        Vector3 defaultPlayerCoords = new Vector3(mapCells[0].transform.position.x, mapCells[0].transform.position.y + yCoordDiff, mapCells[0].transform.position.z);
+        playerModel.transform.position = defaultPlayerCoords;
     }
 
     // Update is called once per frame

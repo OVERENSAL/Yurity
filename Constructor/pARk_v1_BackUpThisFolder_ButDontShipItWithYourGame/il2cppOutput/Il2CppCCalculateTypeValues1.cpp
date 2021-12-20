@@ -20305,6 +20305,8 @@ struct GameProcess_t661A25E52E3B3E0584C6538B01BC2E8339DB6962  : public MonoBehav
 	bool ___stepComplete_13;
 	// System.Int32 GameProcess::steps
 	int32_t ___steps_14;
+	// System.Single GameProcess::yCoordDiff
+	float ___yCoordDiff_15;
 };
 
 // PlaneBehavior
