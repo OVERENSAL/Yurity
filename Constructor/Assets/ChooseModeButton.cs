@@ -18,6 +18,7 @@ public class ChooseModeButton : MonoBehaviour
 
     public void onClickConstructor()
     {
+        SaveScriipt.read();
         startLayout.SetActive(false);
         chooseMapLayout.SetActive(true);
         constructorMapLayout.SetActive(true);
