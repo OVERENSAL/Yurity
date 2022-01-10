@@ -26,7 +26,7 @@ public class MoveObj : MonoBehaviour
 
     void Start()
     {
-        camera = GameObject.Find("AR Camera").GetComponent<Camera>();
+        camera = GameObject.Find("ARCamera").GetComponent<Camera>();
         //taleManager = GameObject.Find("ARCamera").GetComponent<TaleManager>();
     }
 
