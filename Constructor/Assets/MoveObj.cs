@@ -65,9 +65,14 @@ public class MoveObj : MonoBehaviour
                     blink = false;
                 }
             }
+            
+        }
+        if (Input.GetMouseButton(0))
+        {
             if (State.movable)
             {
                 ray = camera.ScreenPointToRay(Input.mousePosition);
+                print('d');
                 if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
                 {
                     transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -87,7 +92,7 @@ public class MoveObj : MonoBehaviour
 
             }
         }
-     }
+    }
 
     void OnMouseDown()
     {
