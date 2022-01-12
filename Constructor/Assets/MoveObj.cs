@@ -71,8 +71,7 @@ public class MoveObj : MonoBehaviour
         {
             if (State.movable)
             {
-                ray = camera.ScreenPointToRay(Input.mousePosition);
-                print('d');
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
                 {
                     transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
@@ -80,7 +79,7 @@ public class MoveObj : MonoBehaviour
             }
             else
             {
-                ray = camera.ScreenPointToRay(Input.mousePosition);
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
                 {
                     transform.rotation = Quaternion.Euler(
@@ -93,30 +92,6 @@ public class MoveObj : MonoBehaviour
             }
         }
     }
-
-    void OnMouseDown()
-    {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-
-        /*if (GetMenuManager().CurrentMoveObj == null)
-        {
-            GetMenuManager().CurrentMoveObj = gameObject;
-        }*/
-    }
-
-    void OnMouseUp()
-    {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-
-        //GetMenuManager().CurrentMoveObj = null;
-    }
-
     void setMaterial()
     {
         if (isActivePlane && State.material != null)

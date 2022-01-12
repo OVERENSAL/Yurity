@@ -18,13 +18,16 @@ public class PrefabButtonBeh : MonoBehaviour
         //gO.GetComponent<BoxCollider>().enabled = true;
         gO.AddComponent<MoveObj>();
         gO.AddComponent<PlaneBehavior>();
-        State.gameObjects.Add(gO);
+        State.gameObjects["yasosubiby"].Add(gO);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(!State.gameObjects.ContainsKey("yasosubiby"))
+        {
+            State.gameObjects.Add("yasosubiby", new List<GameObject>());
+        }
     }
 
     // Update is called once per frame

@@ -7,17 +7,25 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class SaveScriipt : MonoBehaviour
 {
-    static public void save()
+    public GameObject startView;
+    public GameObject constructorView;
+    public void save()
     {
-        FileStream file = File.Create(Application.persistentDataPath + "/SaveMaps.dat");
-
+        FileStream file;
+        if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
+        {
+            file = File.Open(Application.persistentDataPath + "/SaveMaps.dat", FileMode.Open);
+        } else
+        {
+            file = File.Create(Application.persistentDataPath + "/SaveMaps.dat");
+        }
         SaveData data = new SaveData();
         data.gameObjects = State.gameObjects;
-
         DataContractSerializer bf = new DataContractSerializer(data.GetType());
         MemoryStream streamer = new MemoryStream();
 
@@ -30,9 +38,13 @@ public class SaveScriipt : MonoBehaviour
 
         string result = XElement.Parse(Encoding.ASCII.GetString(streamer.GetBuffer()).Replace("\0", "")).ToString();
         Debug.Log("Serialized Result: " + result);
+
+        constructorView.SetActive(false);
+        startView.SetActive(true);
+        EditorUtility.DisplayDialog("Успех!", "Карта сохранена", "OK");
     }
 
-    public static List<GameObject> read()
+    public static Dictionary<string, List<GameObject>> read()
     {
         string fileName = Application.persistentDataPath + "/SaveMaps.dat";
         DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
@@ -53,5 +65,5 @@ public class SaveScriipt : MonoBehaviour
 public class SaveData
 {
     [DataMember]
-    public List<GameObject> gameObjects;
+    public Dictionary<string,List<GameObject>> gameObjects;
 }
