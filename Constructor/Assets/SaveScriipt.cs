@@ -16,21 +16,50 @@ public class SaveScriipt : MonoBehaviour
     public GameObject successSaveView;
     public GameObject saveView;
     public InputField inputView;
+
     DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
     public void save()
     {
         if (inputView.GetComponent<InputField>().text != null)
         {
-            SaveData data = new SaveData();
+            try
+            {
+                SaveData data = new SaveData();
 
-            data.mapName = inputView.GetComponent<InputField>().text;
-            data.gameObjects = State.gameObjects;
-            data.otherObjects = State.otherObjects;
+                data.mapName = inputView.GetComponent<InputField>().text;
+                data.gameObjects = State.gameObjects;
+                for (int i = 0; i < State.gameObjects.Count; i++)
+                {
+                    if (State.gameObjects[i].GetComponent<Renderer>().material != null)
+                    {
+                        data.gameObjectsMaterial.Add(State.gameObjects[i].GetComponent<Renderer>().material.ToString().Split(' ')[0]);
+                    }
+                    else
+                    {
+                        data.gameObjectsMaterial.Add(State.commonMaterial.ToString().Split(' ')[0]);
+                    }
+                    data.gameObjectsPosition.Add(State.gameObjects[i].transform.localPosition);
+                    data.gameObjectsScale.Add(State.gameObjects[i].transform.localScale);
+                    data.gameObjectsRotation.Add(State.gameObjects[i].transform.localRotation);
+                }                
 
-            int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
-            FileStream file = File.Create(Application.persistentDataPath + "/map" + count + ".dat");           
+                data.otherObjects = State.otherObjects;
+                for (int i = 0; i < State.otherObjects.Count; i++)
+                {
+                    data.otherObjectsPosition.Add(State.otherObjects[i].transform.localPosition);
+                    data.otherObjectsScale.Add(State.otherObjects[i].transform.localScale);
+                    data.otherObjectsRotation.Add(State.otherObjects[i].transform.localRotation);
+                }
 
-            dcs.WriteObject(file, data);
+                int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
+                FileStream file = File.Create(Application.persistentDataPath + "/map" + count + ".dat");
+
+                dcs.WriteObject(file, data);
+            } catch (Exception e)
+            {
+                print(e);
+            }
+            
             
             /*
             if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
@@ -121,5 +150,20 @@ public class SaveData
     [DataMember]
     public List<GameObject> gameObjects;
     [DataMember]
+    public List<string> gameObjectsMaterial = new List<string>();
+    [DataMember]
+    public List<Vector3> gameObjectsPosition = new List<Vector3>();
+    [DataMember]
+    public List<Vector3> gameObjectsScale = new List<Vector3>();
+    [DataMember]
+    public List<Quaternion> gameObjectsRotation = new List<Quaternion>();
+
+    [DataMember]
     public List<GameObject> otherObjects;
+    [DataMember]
+    public List<Vector3> otherObjectsPosition = new List<Vector3>();
+    [DataMember]
+    public List<Vector3> otherObjectsScale = new List<Vector3>();
+    [DataMember]
+    public List<Quaternion> otherObjectsRotation = new List<Quaternion>();
 }

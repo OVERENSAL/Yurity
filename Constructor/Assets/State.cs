@@ -19,12 +19,39 @@ public static class State
     public static string mapName;
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<GameObject> otherObjects = new List<GameObject>();
+    
 
     public static string currMapName;
     public static List<GameObject> currGameObjects = new List<GameObject>();
     public static List<GameObject> currOtherObjects = new List<GameObject>();
+    public static List<string> currObjectsMaterial = new List<string>();
+    public static List<Vector3> currObjectsPosition = new List<Vector3>();
+    public static List<Vector3> currObjectsScale = new List<Vector3>();
+    public static List<Quaternion> currObjectsRotation = new List<Quaternion>();
+
+    public static List<Vector3> currOtherObjectsPosition = new List<Vector3>();
+    public static List<Vector3> currOtherObjectsScale = new List<Vector3>();
+    public static List<Quaternion> currOtherObjectsRotation = new List<Quaternion>();
 
     public static List<SaveData> data = new List<SaveData>();
+
+    public static Mesh benchMesh;
+    public static Mesh bushMesh;
+    public static Mesh lampMesh;
+    public static Mesh fountainMesh;
+    public static Mesh hovelMesh;
+    public static Mesh tree1Mesh;
+    public static Mesh tree2Mesh;
+    public static Mesh planeMesh;
+
+    public static Material plus;
+    public static Material minus;
+    public static Material step;
+    public static Material stop;
+    public static Material left;
+    public static Material rigth;
+    public static Material shield;
+    public static Material reverse;
 }
 
 public enum ConstructionStatus

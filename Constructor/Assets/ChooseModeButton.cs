@@ -82,23 +82,34 @@ public class ChooseModeButton : MonoBehaviour
             if (State.data[i].mapName == State.currMapName)
             {
                 State.currGameObjects = State.data[i].gameObjects;
+                State.currObjectsMaterial = State.data[i].gameObjectsMaterial;
+                State.currObjectsPosition = State.data[i].gameObjectsPosition;
+                State.currObjectsScale = State.data[i].gameObjectsScale;
+                State.currObjectsRotation = State.data[i].gameObjectsRotation;
+
                 State.currOtherObjects = State.data[i].otherObjects;
+                State.currOtherObjectsPosition = State.data[i].otherObjectsPosition;
+                State.currOtherObjectsScale = State.data[i].otherObjectsScale;
+                State.currOtherObjectsRotation = State.data[i].otherObjectsRotation;
             }
         }
         gameView.SetActive(false);
         gameMap.SetActive(true);
 
+        CREATOR creator = new CREATOR();
         //instantiate
         for (int i = 0; i < State.currGameObjects.Count; i++)
         {
             GameObject gO = Instantiate(State.currGameObjects[i]) as GameObject;
             gO.transform.SetParent(plane.transform);
+            creator.createPlaneObjects(gO, i);
         }
+
         for (int i = 0; i < State.currOtherObjects.Count; i++)
         {
             GameObject gO = Instantiate(State.currOtherObjects[i]) as GameObject;
             gO.transform.SetParent(plane.transform);
-            gO.AddComponent<Renderer>().material = State.parkMaterial;
+            creator.createOtherObjects(gO, i);
         }
 
     }
