@@ -26,23 +26,23 @@ public class planeScript : MonoBehaviour
         {
             return;
         }
-        if (State.status == ConstructionStatus.routing)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                filter = hit.collider.GetComponent(typeof(MeshFilter)) as MeshFilter;
-            }
-            if (filter)
-            {
-                if (!State.gameObjects["yasosubiby"].Contains(filter.gameObject))
+            filter = hit.collider.GetComponent(typeof(MeshFilter)) as MeshFilter;
+        }
+        if (filter)
+        {
+            if (State.status == ConstructionStatus.routing){
+            
+                if (!State.gameObjects.Contains(filter.gameObject))
                 {
                     filter.gameObject.transform.localPosition = new Vector3(
                         filter.gameObject.transform.localPosition.x,
                         filter.gameObject.transform.localPosition.y,
                         filter.gameObject.transform.localPosition.z + 0.1f);
-                    State.gameObjects["yasosubiby"].Add(filter.gameObject);
+                    State.gameObjects.Add(filter.gameObject);
                 }
                 else
                 {
@@ -50,9 +50,28 @@ public class planeScript : MonoBehaviour
                         filter.gameObject.transform.localPosition.x,
                         filter.gameObject.transform.localPosition.y,
                         filter.gameObject.transform.localPosition.z - 0.1f);
-                    State.gameObjects["yasosubiby"].Remove(filter.gameObject);
+                    State.gameObjects.Remove(filter.gameObject);
+                }
+            }
+            if (State.status == ConstructionStatus.feature)
+            {
+                if (State.highlighted != null && State.highlighted != filter.gameObject)
+                {
+                    State.highlighted.GetComponent<Renderer>().material = State.commonMaterial;
+                    State.highlighted = filter.gameObject;
+                    State.highlighted.GetComponent<Renderer>().material = State.highLightMaterial;
+                }
+                else if (State.highlighted != null && State.highlighted == filter.gameObject)
+                {
+                    State.highlighted.GetComponent<Renderer>().material = State.commonMaterial;
+                    State.highlighted = null;
+                } else
+                {
+                    State.highlighted = filter.gameObject;
+                    State.highlighted.GetComponent<Renderer>().material = State.highLightMaterial;
                 }
             }
         }
+        
     }
 }

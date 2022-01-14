@@ -15,7 +15,7 @@ public class nextBtnRouteScript : MonoBehaviour
         for(int i = 0; i < 196; i++)
         {
             GameObject go = GameObject.Find("Flowers (" + i + ")");
-            if (!State.gameObjects["yasosubiby"].Contains(go)) 
+            if (!State.gameObjects.Contains(go)) 
             {
                 go.transform.localPosition = new Vector3(
                     go.transform.localPosition.x,

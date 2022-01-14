@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class exit : MonoBehaviour
 {
+    public GameObject constructor;
     public GameObject startView;
     public GameObject currentView;
     public GameObject plane;
@@ -23,7 +24,7 @@ public class exit : MonoBehaviour
             for (int i = 0; i < 196; i++)
             {
                 GameObject go = GameObject.Find("Flowers (" + i + ")");
-                if (State.gameObjects["yasosubiby"].Contains(go))
+                if (State.gameObjects.Contains(go))
                 {
                     go.transform.localPosition = new Vector3(
                         go.transform.localPosition.x,
@@ -36,7 +37,7 @@ public class exit : MonoBehaviour
             for (int i = 0; i < 196; i++)
             {
                 GameObject go = GameObject.Find("Flowers (" + i + ")");
-                if (!State.gameObjects["yasosubiby"].Contains(go))
+                if (!State.gameObjects.Contains(go))
                 {
                     go.transform.localPosition = new Vector3(
                         go.transform.localPosition.x,
@@ -52,7 +53,14 @@ public class exit : MonoBehaviour
                 }
             }
         }
-        State.gameObjects["yasosubiby"].Clear();
+        for (int i = 0; i < State.gameObjects.Count; i++)
+        {
+            State.gameObjects[i].GetComponent<Renderer>().material = State.commonMaterial;
+        }
+        State.highlighted = null;
+        State.gameObjects.Clear();
+        State.otherObjects.Clear();
         State.status = ConstructionStatus.init;
-    }
+        constructor.SetActive(false);
+}
 }

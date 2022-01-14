@@ -12,27 +12,12 @@ public class PrefabButtonBeh : MonoBehaviour
     {
         GameObject gO = Instantiate(gameObject) as GameObject;
         gO.transform.SetParent(plane.transform);
-        gO.transform.position = new Vector3(plane.transform.position.x, plane.transform.position.y + gO.transform.position.y, plane.transform.position.z);// + new Vector3(0, 0.035f, 0);
-        //gO.transform.localScale = plane.transform.localScale / 10;
+        gO.transform.position = new Vector3(plane.transform.position.x, plane.transform.position.y + gO.transform.position.y, plane.transform.position.z);
         gO.GetComponent<Renderer>().material = material;
-        //gO.GetComponent<BoxCollider>().enabled = true;
+        gO.GetComponent<MeshCollider>().enabled = false;
+        gO.AddComponent<BoxCollider>().isTrigger = true;
         gO.AddComponent<MoveObj>();
         gO.AddComponent<PlaneBehavior>();
-        State.gameObjects["yasosubiby"].Add(gO);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(!State.gameObjects.ContainsKey("yasosubiby"))
-        {
-            State.gameObjects.Add("yasosubiby", new List<GameObject>());
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        State.otherObjects.Add(gO);
     }
 }

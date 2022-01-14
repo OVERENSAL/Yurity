@@ -36,7 +36,7 @@ public class ChooseModeButton : MonoBehaviour
         startLayout.SetActive(false);
         chooseMapLayout.SetActive(false);
         constructorMapLayout.SetActive(false);
-        State.gameObjects = SaveScriipt.read();
+        SaveData data = SaveScriipt.read();
         print(State.gameObjects.Count);
 
         if (State.gameObjects.Count != 0)

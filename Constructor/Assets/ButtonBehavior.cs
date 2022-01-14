@@ -9,7 +9,7 @@ public class ButtonBehavior : MonoBehaviour
 
     public void onClick()
     {
-        State.material = material;
-        print("newmat");
+        State.highlighted.GetComponent<Renderer>().material = material;
+        State.highlighted = null;
     }
 }

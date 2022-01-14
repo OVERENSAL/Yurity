@@ -82,13 +82,7 @@ public class PlaneBehavior : MonoBehaviour
                 //для сброса материала при переключении
                 if (activePlane != null)
                 {
-                    if (!State.selectedMaterial.ContainsKey(activePlane))
-                    {
-                        activePlane.material = material;
-                    } else
-                    {
-                        activePlane.material = State.selectedMaterial[activePlane];
-                    } 
+                   
                 }
                 if (planeList.Contains(buttonName)) {
                     choosePlane(hit);
@@ -107,13 +101,7 @@ public class PlaneBehavior : MonoBehaviour
         if (isActivePlane && State.material != null)
         {
             activePlane.material = State.material;
-            if (State.selectedMaterial.ContainsKey(activePlane))
-            {
-                State.selectedMaterial[activePlane] = State.material;
-            } else
-            {
-                State.selectedMaterial.Add(activePlane, State.material);
-            }
+           
             State.material = null;
         }
     }

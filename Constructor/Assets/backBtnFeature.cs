@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class backBtnRoute : MonoBehaviour
+public class backBtnFeature : MonoBehaviour
 {
     public GameObject routeView;
     public GameObject featureView;
@@ -21,6 +21,9 @@ public class backBtnRoute : MonoBehaviour
                     go.transform.localPosition.x,
                     go.transform.localPosition.y,
                     go.transform.localPosition.z + 0.2f);
+            } else
+            {
+                go.GetComponent<Renderer>().material = State.commonMaterial;
             }
         }
     }

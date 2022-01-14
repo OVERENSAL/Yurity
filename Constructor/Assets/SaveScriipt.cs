@@ -9,42 +9,51 @@ using System.Xml;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveScriipt : MonoBehaviour
 {
-    public GameObject startView;
-    public GameObject constructorView;
+    public GameObject successSaveView;
+    public GameObject saveView;
+    public InputField inputView;
     public void save()
     {
-        FileStream file;
-        if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
+        if (inputView.GetComponent<InputField>().text != null)
         {
-            file = File.Open(Application.persistentDataPath + "/SaveMaps.dat", FileMode.Open);
-        } else
-        {
-            file = File.Create(Application.persistentDataPath + "/SaveMaps.dat");
+            FileStream file;
+            if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
+            {
+                file = File.Open(Application.persistentDataPath + "/SaveMaps.dat", FileMode.Open);
+            }
+            else
+            {
+                file = File.Create(Application.persistentDataPath + "/SaveMaps.dat");
+            }
+            SaveData data = new SaveData();
+
+            data.mapName = inputView.GetComponent<InputField>().text;
+            data.gameObjects = State.gameObjects;
+            data.otherObjects = State.otherObjects;
+
+            DataContractSerializer bf = new DataContractSerializer(data.GetType());
+            MemoryStream streamer = new MemoryStream();
+
+            bf.WriteObject(streamer, data);
+            streamer.Seek(0, SeekOrigin.Begin);
+
+            file.Write(streamer.GetBuffer(), 0, streamer.GetBuffer().Length);
+
+            file.Close();
+
+            string result = XElement.Parse(Encoding.ASCII.GetString(streamer.GetBuffer()).Replace("\0", "")).ToString();
+            Debug.Log("Serialized Result: " + result);
+
+            saveView.SetActive(false);
+            successSaveView.SetActive(true);
         }
-        SaveData data = new SaveData();
-        data.gameObjects = State.gameObjects;
-        DataContractSerializer bf = new DataContractSerializer(data.GetType());
-        MemoryStream streamer = new MemoryStream();
-
-        bf.WriteObject(streamer, data);
-        streamer.Seek(0, SeekOrigin.Begin);
-
-        file.Write(streamer.GetBuffer(), 0, streamer.GetBuffer().Length);
-
-        file.Close();
-
-        string result = XElement.Parse(Encoding.ASCII.GetString(streamer.GetBuffer()).Replace("\0", "")).ToString();
-        Debug.Log("Serialized Result: " + result);
-
-        constructorView.SetActive(false);
-        startView.SetActive(true);
-        EditorUtility.DisplayDialog("Успех!", "Карта сохранена", "OK");
     }
 
-    public static Dictionary<string, List<GameObject>> read()
+    public static SaveData read()
     {
         string fileName = Application.persistentDataPath + "/SaveMaps.dat";
         DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
@@ -57,7 +66,7 @@ public class SaveScriipt : MonoBehaviour
 
         Debug.Log("Deserialized Result: " + data.gameObjects);
 
-        return data.gameObjects;
+        return data;
     }
 }
 
@@ -65,5 +74,7 @@ public class SaveScriipt : MonoBehaviour
 public class SaveData
 {
     [DataMember]
-    public Dictionary<string,List<GameObject>> gameObjects;
+    public string mapName;
+    public List<GameObject> gameObjects;
+    public List<GameObject> otherObjects;
 }
