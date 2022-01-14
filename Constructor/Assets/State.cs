@@ -11,13 +11,20 @@ public static class State
     public static Material highLightMaterial;
     public static Material errorMaterial;
     public static Material parkMaterial;
-    public static string mapName;
+    public static GameObject highlighted;
+
     //не нужно
     public static Material material;
-
-    public static GameObject highlighted;
+    
+    public static string mapName;
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<GameObject> otherObjects = new List<GameObject>();
+
+    public static string currMapName;
+    public static List<GameObject> currGameObjects = new List<GameObject>();
+    public static List<GameObject> currOtherObjects = new List<GameObject>();
+
+    public static List<SaveData> data = new List<SaveData>();
 }
 
 public enum ConstructionStatus

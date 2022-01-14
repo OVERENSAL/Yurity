@@ -5,11 +5,11 @@ using UnityEngine;
 public class goToConstructor : MonoBehaviour
 {
     public GameObject gameMapLayout;
-    public GameObject constructor
-        ;
+    public GameObject constructor;
     public void onClick()
     {
         gameMapLayout.SetActive(false);
         constructor.SetActive(true);
+        State.status = ConstructionStatus.routing;
     }
 }

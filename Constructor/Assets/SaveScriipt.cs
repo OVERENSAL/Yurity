@@ -16,11 +16,23 @@ public class SaveScriipt : MonoBehaviour
     public GameObject successSaveView;
     public GameObject saveView;
     public InputField inputView;
+    DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
     public void save()
     {
         if (inputView.GetComponent<InputField>().text != null)
         {
-            FileStream file;
+            SaveData data = new SaveData();
+
+            data.mapName = inputView.GetComponent<InputField>().text;
+            data.gameObjects = State.gameObjects;
+            data.otherObjects = State.otherObjects;
+
+            int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
+            FileStream file = File.Create(Application.persistentDataPath + "/map" + count + ".dat");           
+
+            dcs.WriteObject(file, data);
+            
+            /*
             if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
             {
                 file = File.Open(Application.persistentDataPath + "/SaveMaps.dat", FileMode.Open);
@@ -46,27 +58,58 @@ public class SaveScriipt : MonoBehaviour
             file.Close();
 
             string result = XElement.Parse(Encoding.ASCII.GetString(streamer.GetBuffer()).Replace("\0", "")).ToString();
-            Debug.Log("Serialized Result: " + result);
+            Debug.Log("Serialized Result: " + result);*/
 
             saveView.SetActive(false);
             successSaveView.SetActive(true);
         }
     }
 
-    public static SaveData read()
+    public static List<SaveData> read()
     {
-        string fileName = Application.persistentDataPath + "/SaveMaps.dat";
-        DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
-        FileStream fs = new FileStream(fileName, FileMode.Open);
-        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+        int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
 
-        SaveData data = (SaveData)dcs.ReadObject(reader);
-        reader.Close();
-        fs.Close();
+        try
+        {
+            DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
+            List<SaveData> listData = new List<SaveData>();
+            for (int i = 0; i < count; i++)
+            {
+                if (File.Exists(Application.persistentDataPath + "/map" + i + ".dat"))
+                {
+                    FileStream file = File.Open(Application.persistentDataPath + "/map" + i + ".dat", FileMode.Open);
+                    listData.Add((SaveData)dcs.ReadObject(file));
+                }
+            }
+            return listData;
+        } catch (Exception e)
+        {
+            print(e);
+        }
+        
 
-        Debug.Log("Deserialized Result: " + data.gameObjects);
+        if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
+        {
+            
+            /*try
+            {
+                DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
+                FileStream fs = new FileStream(fileName, FileMode.Open);
+                XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
 
-        return data;
+                SaveData data = (SaveData)dcs.ReadObject(reader);
+                reader.Close();
+                fs.Close();
+
+                Debug.Log("Deserialized Result: " + data.gameObjects);
+
+                return data;
+            } catch (Exception e) {
+                print(e);
+            }*/
+            
+        }
+        return null;
     }
 }
 
@@ -75,6 +118,8 @@ public class SaveData
 {
     [DataMember]
     public string mapName;
+    [DataMember]
     public List<GameObject> gameObjects;
+    [DataMember]
     public List<GameObject> otherObjects;
 }
