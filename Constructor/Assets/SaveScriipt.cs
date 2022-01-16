@@ -55,6 +55,9 @@ public class SaveScriipt : MonoBehaviour
                 FileStream file = File.Create(Application.persistentDataPath + "/map" + count + ".dat");
 
                 dcs.WriteObject(file, data);
+                file.Flush();
+                file.Position = 0;
+
                 file.Close();
             } catch (Exception e)
             {

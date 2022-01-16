@@ -7082,7 +7082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.250061, y: 5.5999756}
+  m_AnchoredPosition: {x: -4.25, y: 5.5999756}
   m_SizeDelta: {x: 5.3001146, y: -16.3999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &473449871
@@ -8721,7 +8721,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: stop
 --- !u!1001 &538385218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9375,7 +9374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: plus
 --- !u!1 &590639610
 GameObject:
   m_ObjectHideFlags: 0
@@ -10474,7 +10472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: shield
 --- !u!1 &629774195
 GameObject:
   m_ObjectHideFlags: 0
@@ -11830,35 +11827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74936aeb0588a9146a9ceeba623e0c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!21 &698265661
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'imageTarget1Material
-
-    21736'
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ceecf9d65a7a4d9a8eea1980d52d18c3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &702432812
 GameObject:
   m_ObjectHideFlags: 0
@@ -13864,7 +13832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: reverse
 --- !u!1001 &792966759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23024,7 +22991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: step
 --- !u!1001 &1331748672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24916,7 +24882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: minus
 --- !u!1001 &1475612504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25969,7 +25934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: left
 --- !u!1 &1564550098
 GameObject:
   m_ObjectHideFlags: 0
@@ -26395,6 +26359,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74936aeb0588a9146a9ceeba623e0c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &1582739212
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'imageTarget1Material
+
+    53054'
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: ceecf9d65a7a4d9a8eea1980d52d18c3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0.82089555, g: 0.82089555, b: 0.82089555, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1001 &1585205677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28553,7 +28546,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 698265661}
+  - {fileID: 1582739212}
   - {fileID: 729330696}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -31103,7 +31096,7 @@ RectTransform:
   - {fileID: 999709977}
   - {fileID: 667053886}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -31268,7 +31261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: right
 --- !u!1001 &1827568454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31800,7 +31792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba06871a1ef4e044ae4e27f8c600035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellName: reverse
 --- !u!114 &1869827117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34920,7 +34911,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5434462552450501220
 MonoBehaviour:
