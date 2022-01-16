@@ -55,6 +55,7 @@ public class SaveScriipt : MonoBehaviour
                 FileStream file = File.Create(Application.persistentDataPath + "/map" + count + ".dat");
 
                 dcs.WriteObject(file, data);
+                file.Close();
             } catch (Exception e)
             {
                 print(e);
@@ -108,6 +109,7 @@ public class SaveScriipt : MonoBehaviour
                 {
                     FileStream file = File.Open(Application.persistentDataPath + "/map" + i + ".dat", FileMode.Open);
                     listData.Add((SaveData)dcs.ReadObject(file));
+                    file.Close();
                 }
             }
             return listData;
