@@ -15,7 +15,7 @@ public static class State
 
     //не нужно
     public static Material material;
-    
+
     public static string mapName;
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<GameObject> otherObjects = new List<GameObject>();
@@ -52,6 +52,13 @@ public static class State
     public static Material rigth;
     public static Material shield;
     public static Material reverse;
+    public static Material start;
+    public static Material finish;
+    public static GameObject ChooseView;
+    public static GameObject GameView;
+
+    public static GameObject endGameButton;
+    public static GameObject EndView;
 }
 
 public enum ConstructionStatus

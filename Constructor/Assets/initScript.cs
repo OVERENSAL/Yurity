@@ -15,6 +15,11 @@ public class initScript : MonoBehaviour
     public GameObject SaveView;
     public GameObject SuccessSaveView;
 
+    public GameObject ChooseView;
+    public GameObject GameView;
+
+    public GameObject EndView;
+
     public Material commonMaterial;
     public Material highLightMaterial;
     public Material errorMaterial;
@@ -37,6 +42,10 @@ public class initScript : MonoBehaviour
     public Material rigth;
     public Material shield;
     public Material reverse;
+    public Material start;
+    public Material finish;
+
+    public GameObject endGameButtton;
 
     void Start()
     {
@@ -76,5 +85,16 @@ public class initScript : MonoBehaviour
 
         constructor.SetActive(false);
         game.SetActive(false);
+        ChooseView.SetActive(false);
+        GameView.SetActive(false);
+        State.ChooseView = ChooseView;
+        State.GameView = GameView;
+        EndView.SetActive(false);
+
+        State.endGameButton = endGameButtton;
+        State.EndView = EndView;
+
+        State.start = start;
+        State.finish = finish;
     }
 }

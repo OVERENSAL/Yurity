@@ -53,10 +53,14 @@ public class ChooseModeButton : MonoBehaviour
         }
         if (State.data.Count != 0)
         {
-            //gameMapLayout.SetActive(true);
-            //gameCanvas.SetActive(true);
-            //отображать после выбора карты
-            for(int i = 0; i < State.data.Count; i++)
+            for (int i = 0; i < gridLayout.transform.childCount; i++)
+            {
+                Destroy(gridLayout.transform.GetChild(i).gameObject);
+            }
+                //gameMapLayout.SetActive(true);
+                //gameCanvas.SetActive(true);
+                //отображать после выбора карты
+                for (int i = 0; i < State.data.Count; i++)
             {
                 GameObject button = (GameObject)Instantiate(buttonPrefab);
 
@@ -112,5 +116,6 @@ public class ChooseModeButton : MonoBehaviour
             creator.createOtherObjects(gO, i);
         }
 
+        State.ChooseView.SetActive(true);
     }
 }

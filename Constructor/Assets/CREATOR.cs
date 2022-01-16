@@ -9,8 +9,21 @@ public class CREATOR : MonoBehaviour
         gO.AddComponent<MeshFilter>().mesh = State.planeMesh;
         gO.transform.localPosition = State.currObjectsPosition[i];
         gO.transform.localScale = State.currObjectsScale[i];
-
-        switch(State.currObjectsMaterial[i])
+        gO.transform.localRotation = State.currObjectsRotation[i];
+        gO.AddComponent<MeshCollider>();
+        if (i == 0)
+        {
+            gO.AddComponent<MeshRenderer>().material = State.start;
+            State.currObjectsMaterial[i] = "undefined";
+            return;
+        }        
+        if (i == State.currGameObjects.Count - 1)
+        {
+            gO.AddComponent<MeshRenderer>().material = State.finish;
+            State.currObjectsMaterial[i] = "undefined";
+            return;
+        }
+        switch (State.currObjectsMaterial[i])
         {
             case "minus":
                 gO.AddComponent<MeshRenderer>().material = State.minus;
@@ -40,8 +53,7 @@ public class CREATOR : MonoBehaviour
                 gO.AddComponent<MeshRenderer>().material = State.commonMaterial;
                 break;
         }
-        gO.transform.localRotation = State.currObjectsRotation[i];
-        gO.AddComponent<MeshCollider>();
+        
 
     }
     public void createOtherObjects(GameObject gO, int i)

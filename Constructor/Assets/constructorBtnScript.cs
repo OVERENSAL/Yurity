@@ -17,6 +17,7 @@ public class constructorBtnScript : MonoBehaviour
         {
             GameObject go = GameObject.Find("Flowers (" + i + ")");
             go.AddComponent<BoxCollider>();
+            go.AddComponent<MeshCollider>();
             go.GetComponent<MeshCollider>().enabled = false;
             go.AddComponent<Rigidbody>();
             go.GetComponent<Rigidbody>().isKinematic = true;
