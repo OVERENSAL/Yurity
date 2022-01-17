@@ -104,14 +104,41 @@ public class ChooseModeButton : MonoBehaviour
         //instantiate
         for (int i = 0; i < State.currGameObjects.Count; i++)
         {
-            GameObject gO = Instantiate(State.currGameObjects[i]) as GameObject;
+            GameObject gO = Instantiate(State.cell) as GameObject;
             gO.transform.SetParent(plane.transform);
             creator.createPlaneObjects(gO, i);
         }
 
         for (int i = 0; i < State.currOtherObjects.Count; i++)
         {
-            GameObject gO = Instantiate(State.currOtherObjects[i]) as GameObject;
+            GameObject gO;
+            switch (State.currOtherObjects[i].Split('(')[0])
+            {
+                case "Bench":
+                    gO = Instantiate(State.bench);
+                    break;
+                case "Bush":
+                    gO = Instantiate(State.bush);
+                    break;
+                case "Fountain_1":
+                    gO = Instantiate(State.fountain);
+                    break;
+                case "Hovel_Green":
+                    gO = Instantiate(State.hovel);
+                    break;
+                case "Lamp":
+                    gO = Instantiate(State.lamp);
+                    break;
+                case "Tree_1":
+                    gO = Instantiate(State.tree1);
+                    break;
+                case "Tree_5":
+                    gO = Instantiate(State.tree2);
+                    break;
+                default:
+                    gO = null;
+                    break;
+            }
             gO.transform.SetParent(plane.transform);
             creator.createOtherObjects(gO, i);
         }

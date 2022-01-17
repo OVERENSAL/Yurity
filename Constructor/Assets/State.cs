@@ -22,8 +22,8 @@ public static class State
     
 
     public static string currMapName;
-    public static List<GameObject> currGameObjects = new List<GameObject>();
-    public static List<GameObject> currOtherObjects = new List<GameObject>();
+    public static List<string> currGameObjects = new List<string>();
+    public static List<string> currOtherObjects = new List<string>();
     public static List<string> currObjectsMaterial = new List<string>();
     public static List<Vector3> currObjectsPosition = new List<Vector3>();
     public static List<Vector3> currObjectsScale = new List<Vector3>();
@@ -59,6 +59,16 @@ public static class State
 
     public static GameObject endGameButton;
     public static GameObject EndView;
+
+    public static GameObject cell;
+
+    public static GameObject bench;
+    public static GameObject lamp;
+    public static GameObject hovel;
+    public static GameObject tree1;
+    public static GameObject tree2;
+    public static GameObject bush;
+    public static GameObject fountain;
 }
 
 public enum ConstructionStatus

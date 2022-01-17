@@ -47,8 +47,26 @@ public class initScript : MonoBehaviour
 
     public GameObject endGameButtton;
 
-    void Start()
+    public GameObject cell;
+
+    public GameObject bench;
+    public GameObject lamp;
+    public GameObject hovel;
+    public GameObject tree1;
+    public GameObject tree2;
+    public GameObject bush;
+    public GameObject fountain;
+
+void Start()
     {
+        State.bench = bench;
+        State.lamp = lamp;
+        State.hovel = hovel;
+        State.tree1 = tree1;
+        State.tree2 = tree2;
+        State.bush = bush;
+        State.fountain = fountain;
+
         State.plus = plus;
         State.minus = minus;
         State.step = step;
@@ -96,5 +114,7 @@ public class initScript : MonoBehaviour
 
         State.start = start;
         State.finish = finish;
+
+        State.cell = cell;
     }
 }

@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,28 +23,58 @@ public class SaveScriipt : MonoBehaviour
     {
         if (inputView.GetComponent<InputField>().text != null)
         {
+            int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
+
+            SaveData data = new SaveData();
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveData));
+
+            data.mapName = inputView.GetComponent<InputField>().text;
+            for (int i = 0; i < State.gameObjects.Count; i++)
+            {
+                data.gameObjects.Add(State.gameObjects[i].name);
+                data.gameObjectsMaterial.Add(State.gameObjects[i].GetComponent<Renderer>().material.ToString().Split(' ')[0]);
+                data.gameObjectsPosition.Add(State.gameObjects[i].transform.localPosition);
+                data.gameObjectsScale.Add(State.gameObjects[i].transform.localScale);
+                data.gameObjectsRotation.Add(State.gameObjects[i].transform.localRotation);
+            }
+            for (int i = 0; i < State.otherObjects.Count; i++)
+            {
+                data.otherObjects.Add(State.otherObjects[i].name);
+            }
+            for (int i = 0; i < State.otherObjects.Count; i++)
+            {
+                data.otherObjectsPosition.Add(State.otherObjects[i].transform.localPosition);
+                data.otherObjectsScale.Add(State.otherObjects[i].transform.localScale);
+                data.otherObjectsRotation.Add(State.otherObjects[i].transform.localRotation);
+            }
+            using (TextWriter writer = new StreamWriter(@Application.persistentDataPath + "/map" + count + ".dat")) 
+            {
+                serializer.Serialize(writer, data);
+            }
+//            file.Flush();
+  //          file.Position = 0;
+    //        file.Close();
+            Debug.Log("Game data saved!");
+        }
+        /*if (inputView.GetComponent<InputField>().text != null)
+        {
             try
             {
                 SaveData data = new SaveData();
 
                 data.mapName = inputView.GetComponent<InputField>().text;
-                data.gameObjects = State.gameObjects;
                 for (int i = 0; i < State.gameObjects.Count; i++)
                 {
-                    if (State.gameObjects[i].GetComponent<Renderer>().material != null)
-                    {
-                        data.gameObjectsMaterial.Add(State.gameObjects[i].GetComponent<Renderer>().material.ToString().Split(' ')[0]);
-                    }
-                    else
-                    {
-                        data.gameObjectsMaterial.Add(State.commonMaterial.ToString().Split(' ')[0]);
-                    }
+                    data.gameObjects.Add(State.gameObjects[i].name);
+                    data.gameObjectsMaterial.Add(State.gameObjects[i].GetComponent<Renderer>().material.ToString().Split(' ')[0]);
                     data.gameObjectsPosition.Add(State.gameObjects[i].transform.localPosition);
                     data.gameObjectsScale.Add(State.gameObjects[i].transform.localScale);
                     data.gameObjectsRotation.Add(State.gameObjects[i].transform.localRotation);
                 }                
-
-                data.otherObjects = State.otherObjects;
+                for (int i =0; i < State.otherObjects.Count; i++)
+                {
+                    data.otherObjects.Add(State.otherObjects[i].name);
+                }
                 for (int i = 0; i < State.otherObjects.Count; i++)
                 {
                     data.otherObjectsPosition.Add(State.otherObjects[i].transform.localPosition);
@@ -63,7 +94,7 @@ public class SaveScriipt : MonoBehaviour
             {
                 print(e);
             }
-            
+            */
             
             /*
             if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
@@ -95,14 +126,36 @@ public class SaveScriipt : MonoBehaviour
 
             saveView.SetActive(false);
             successSaveView.SetActive(true);
-        }
+        
     }
 
     public static List<SaveData> read()
     {
         int count = new DirectoryInfo(Application.persistentDataPath).GetFiles().Length;
+        List<SaveData> listData = new List<SaveData>();
 
         try
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (File.Exists(Application.persistentDataPath + "/map" + i + ".dat"))
+                {
+                    var serializer = new XmlSerializer(typeof(SaveData));
+                    var stream = new FileStream(Application.persistentDataPath + "/map" + i + ".dat", FileMode.Open);
+                    var container = serializer.Deserialize(stream) as SaveData;
+                    stream.Close();
+                    listData.Add(container);
+
+                }
+            }
+        } catch (Exception e)
+        {
+            print(e);
+        }
+        Debug.Log("Game data loaded!");
+        return listData;
+
+        /*try
         {
             DataContractSerializer dcs = new DataContractSerializer(typeof(SaveData));
             List<SaveData> listData = new List<SaveData>();
@@ -119,8 +172,8 @@ public class SaveScriipt : MonoBehaviour
         } catch (Exception e)
         {
             print(e);
-        }
-        
+        }*/
+
 
         if (File.Exists(Application.persistentDataPath + "/SaveMaps.dat"))
         {
@@ -147,28 +200,29 @@ public class SaveScriipt : MonoBehaviour
     }
 }
 
-[DataContract]
+//[DataContract]
+[Serializable]
 public class SaveData
 {
-    [DataMember]
+    //[DataMember]
     public string mapName;
-    [DataMember]
-    public List<GameObject> gameObjects;
-    [DataMember]
+    //[DataMember]
+    public List<string> gameObjects = new List<string>();
+    //[DataMember]
     public List<string> gameObjectsMaterial = new List<string>();
-    [DataMember]
+    //[DataMember]
     public List<Vector3> gameObjectsPosition = new List<Vector3>();
-    [DataMember]
+    //[DataMember]
     public List<Vector3> gameObjectsScale = new List<Vector3>();
-    [DataMember]
+    //[DataMember]
     public List<Quaternion> gameObjectsRotation = new List<Quaternion>();
 
-    [DataMember]
-    public List<GameObject> otherObjects;
-    [DataMember]
+    //[DataMember]
+    public List<string> otherObjects = new List<string>();
+    //[DataMember]
     public List<Vector3> otherObjectsPosition = new List<Vector3>();
-    [DataMember]
+    //[DataMember]
     public List<Vector3> otherObjectsScale = new List<Vector3>();
-    [DataMember]
+    //[DataMember]
     public List<Quaternion> otherObjectsRotation = new List<Quaternion>();
 }

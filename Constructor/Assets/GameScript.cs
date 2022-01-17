@@ -190,6 +190,11 @@ public class GameScript : MonoBehaviour
 
     public void getRandomInt()
     {
+        if (GAMESTATE.currCellNumber >= State.currGameObjects.Count)
+        {
+            GAMESTATE.currCellNumber = State.currGameObjects.Count;
+            return;
+        }
         var random = new System.Random();
         if (GAMESTATE.currCellNumber == -1)
         {
@@ -201,21 +206,15 @@ public class GameScript : MonoBehaviour
         move = true;
         hideFeature();
         stepCount += 1;
-        if (GAMESTATE.currCellNumber >= State.currGameObjects.Count)
-        {
-            GAMESTATE.currCellNumber = State.currGameObjects.Count;
-        }
+        
         GAMESTATE.money = money;
         GAMESTATE.steps = stepCount;
     }
 
     public void exit()
     {
-        State.EndView.SetActive(true);
-        print(money);
         textMoney.GetComponent<Text>().text = GAMESTATE.money.ToString();
-        textSteps.GetComponent<Text>().text = GAMESTATE.steps.ToString();
-        GameView.SetActive(false);
+        textSteps.GetComponent<Text>().text = GAMESTATE.steps.ToString();        
         for(int i = 0; i < plane.transform.childCount; i++)
         {
             Destroy(plane.transform.GetChild(i).gameObject);
@@ -223,12 +222,14 @@ public class GameScript : MonoBehaviour
         GAMESTATE.player = null;
         GAMESTATE.showFeature = true;
         GAMESTATE.currCellNumber = -1;
-        cellNumber = 0;      
-        game.SetActive(false);
+        cellNumber = 0;
         money = 0;
         stepCount = 0;
         GAMESTATE.money = 0;
         GAMESTATE.steps = 0;
+        State.EndView.SetActive(true);
+        GameView.SetActive(false);
+        game.SetActive(false);
     }
 
     public void lox()
