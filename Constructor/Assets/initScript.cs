@@ -57,7 +57,10 @@ public class initScript : MonoBehaviour
     public GameObject bush;
     public GameObject fountain;
 
-void Start()
+    public AudioClip cellTap;
+    public AudioClip objCreate;
+
+    void Start()
     {
         State.bench = bench;
         State.lamp = lamp;
@@ -116,5 +119,8 @@ void Start()
         State.finish = finish;
 
         State.cell = cell;
+
+        State.cellTap = cellTap;
+        State.objCreate = objCreate;
     }
 }

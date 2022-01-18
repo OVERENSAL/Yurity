@@ -9,10 +9,11 @@ public class planeScript : MonoBehaviour
     private float low = 0.52f;
     private bool change = true;
     MeshFilter filter;
+    AudioSource audio = new AudioSource();
     // Start is called before the first frame update
     void Start()
     {
-        
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,8 +35,9 @@ public class planeScript : MonoBehaviour
         }
         if (filter)
         {
-            if (State.status == ConstructionStatus.routing){
-            
+            if (State.status == ConstructionStatus.routing)
+            {
+                audio.PlayOneShot(State.cellTap, 1.0f);
                 if (!State.gameObjects.Contains(filter.gameObject))
                 {
                     filter.gameObject.transform.localPosition = new Vector3(

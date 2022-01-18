@@ -37,29 +37,36 @@ public class GameScript : MonoBehaviour
 
     public GameObject endButton;
 
+    AudioSource audio = new AudioSource();
+
+    public GameObject congratsView;
+
     private List<string> negativeCells = new List<string>();
     void Start()
     {
+        congratsView.SetActive(false);
         shield.SetActive(false);
         hideFeature();
         text.GetComponent<Text>().text = money.ToString();
         negativeCells.Add("minus");
         negativeCells.Add("stop");
-        negativeCells.Add("right");        
+        negativeCells.Add("right");
+        button.GetComponentInChildren<Text>().text = "Бросить кости";
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GAMESTATE.player.transform.localPosition == State.currObjectsPosition[State.currObjectsPosition.Count - 1] + new Vector3(0, 0, 0.45f))
+        if (cellNumber > State.currGameObjects.Count- 1)
         {
+            congratsView.SetActive(true);
             return;
         }
         if (move)
         {
             try
             {
-                
                 if (cellNumber == GAMESTATE.currCellNumber)
                 {
                     move = false;
@@ -67,6 +74,25 @@ public class GameScript : MonoBehaviour
                 }
                 if (cellNumber < GAMESTATE.currCellNumber)
                 {
+                    if (State.currObjectsMaterial[cellNumber] == "right")
+                    {
+                        if (State.currObjectsMaterial[GAMESTATE.currCellNumber - 1] == "right")
+                        {
+                            GAMESTATE.currCellNumber -= 5;
+                            rightView.SetActive(true);
+                        }
+
+                    }
+                    if (State.currObjectsMaterial[cellNumber] == "left")
+                    {
+                        if (State.currObjectsMaterial[GAMESTATE.currCellNumber - 1] == "left")
+                        {
+                            GAMESTATE.currCellNumber += 5;
+                            leftView.SetActive(true);
+                        }
+                        
+                    }
+                    audio.PlayOneShot(State.cellTap, 1.0f);
                     GAMESTATE.player.transform.localPosition = State.currObjectsPosition[cellNumber] + new Vector3(0, 0, 0.45f);
                     if (cellNumber + 1 != GAMESTATE.currCellNumber)
                     {
@@ -75,6 +101,7 @@ public class GameScript : MonoBehaviour
                 }
                 if (cellNumber > GAMESTATE.currCellNumber)
                 {
+                    
                     GAMESTATE.player.transform.localPosition = State.currObjectsPosition[cellNumber] + new Vector3(0, 0, 0.45f);
                     if (cellNumber - 1 != -1)
                     {
@@ -107,24 +134,11 @@ public class GameScript : MonoBehaviour
                     }
                 }
                 move = false;
-                if (State.currObjectsMaterial[GAMESTATE.currCellNumber - 1] == "left")
-                {
-                    GAMESTATE.currCellNumber += 5;
-                }
-
-                if (State.currObjectsMaterial[GAMESTATE.currCellNumber - 1] == "right")
-                {
-                    GAMESTATE.currCellNumber -= 5;
-                    if (GAMESTATE.currCellNumber < 0)
-                    {
-                        GAMESTATE.currCellNumber = 0;
-                    }
-                }
             } catch (Exception e)
             {
                 print(e);
             }
-            
+
         }
     }
 
@@ -207,8 +221,16 @@ public class GameScript : MonoBehaviour
         hideFeature();
         stepCount += 1;
         
+        
         GAMESTATE.money = money;
         GAMESTATE.steps = stepCount;
+        if (GAMESTATE.currCellNumber >= State.currGameObjects.Count)
+        {
+            GAMESTATE.currCellNumber = State.currGameObjects.Count;
+            return;
+        }
+        print(GAMESTATE.currCellNumber);
+        print(i);
     }
 
     public void exit()

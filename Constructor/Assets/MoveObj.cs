@@ -20,6 +20,7 @@ public class MoveObj : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
+            State.obj = this.gameObject;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))

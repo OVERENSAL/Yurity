@@ -69,6 +69,11 @@ public static class State
     public static GameObject tree2;
     public static GameObject bush;
     public static GameObject fountain;
+
+    public static AudioClip cellTap;
+    public static AudioClip objCreate;
+
+    public static GameObject obj;
 }
 
 public enum ConstructionStatus
